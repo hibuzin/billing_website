@@ -8,15 +8,16 @@ function App() {
   return (
     <>
       <AppBar />
-      <TabsBar />
 
-      <GroceryScroll targetId="products" />
+      <GroceryScroll
+        targetId="products"
+        tabs={<TabsBar />}
+      />
 
-      
+      <Banner />
 
       <section id="products">
         <Products />
-        <Banner />
       </section>
     </>
   )

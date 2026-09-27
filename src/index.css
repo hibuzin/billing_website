@@ -1,29 +1,5 @@
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #ffffff;
-  color: #111111;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-/* Adjust if your navigation stays fixed above the products. */
-#products {
-  scroll-margin-top: 24px;
-}
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; min-width: 320px; min-height: 100vh; }
+body { font-family: Arial, sans-serif; background: #ffffff; color: #111111; }
+button, input, select, textarea { font: inherit; }
+#products { scroll-margin-top: 24px; }

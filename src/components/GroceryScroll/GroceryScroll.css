@@ -1,435 +1,282 @@
-.grocery-scroll {
-  --grocery-green: #244532;
-  --grocery-cream: #faf8ec;
-
+.lg-scroll {
+  --lg-ink: #2d3b2e;
+  --lg-muted: #736f62;
+  /* Mask only the front rim and body of the supplied basket image. */
+  --lg-front-cut: 43%;
   position: relative;
-  height: 320vh;
-  height: 320svh;
-  background: #eef1da;
-  color: var(--grocery-green);
+  height: 330vh;
+  height: 330svh;
+  color: var(--lg-ink);
+  background: #f7f3e9;
   isolation: isolate;
 }
-
-/*
-  Do not put overflow: hidden, auto, or scroll on this section
-  or its ancestors. That can prevent sticky positioning.
-*/
-.grocery-scroll__sticky {
+.lg-scroll * { box-sizing: border-box; }
+.lg-viewport {
   position: sticky;
-  top: var(--grocery-sticky-offset, 0px);
-
-  height: calc(100vh - var(--grocery-sticky-offset, 0px));
-  height: calc(100svh - var(--grocery-sticky-offset, 0px));
-
+  top: var(--lg-offset, 0px);
+  height: calc(100vh - var(--lg-offset, 0px));
+  height: calc(100svh - var(--lg-offset, 0px));
   overflow: hidden;
+  perspective: 1400px;
+  background: radial-gradient(ellipse at 50% 40%, #fffdf5 0%, #f7f3e9 56%, #e9e1d1 100%);
   isolation: isolate;
+}
+.lg-topline, .lg-footer {
+  position: absolute; left: 6%; right: 6%; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+.lg-topline { top: 28px; }
+.lg-wordmark { font: 600 12px/1.4 Arial, sans-serif; letter-spacing: .17em; }
+.lg-wordmark > span { padding: 0 12px; color: #aaa190; }
+.lg-scroll button { font: inherit; cursor: pointer; touch-action: manipulation; }
+.lg-skip { border: 0; border-bottom: 1px solid #a6a08f; background: none; color: inherit; padding: 8px 0; font-size: 14px !important; }
+.lg-skip span { margin-left: 18px; }
+.lg-watermark { position: absolute; left: 50%; top: 39%; transform: translateX(-50%); white-space: nowrap; font: italic clamp(75px, 15vw, 240px)/1 Georgia, serif; letter-spacing: -.045em; color: #b9ad9420; pointer-events: none; }
+.lg-intro { position: absolute; z-index: 12; top: 13%; left: 8%; right: 8%; text-align: center; pointer-events: none; animation: lg-reveal .6s ease both; }
+.lg-eyebrow { font: 600 11px/1.5 Arial, sans-serif; letter-spacing: .18em; color: #807964; }
+.lg-intro h2 { margin: 14px 0 0; font: 400 clamp(29px, 3.8vw, 56px)/1.05 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; }
+.lg-intro h2 em { font-weight: 400; color: #737b5e; }
+.lg-stage { position: absolute; z-index: 5; top: 64%; left: 50%; width: min(77vw, 960px); aspect-ratio: 1.6; transform: translate(-50%, -50%); opacity: 0; transition: opacity .6s; will-change: transform; pointer-events: none; }
+.lg-stage.is-ready { opacity: 1; }
+.lg-basket { position: absolute; width: 64%; left: 18%; top: 26%; height: auto; user-select: none; }
+.lg-basket--back { z-index: 1; }
+.lg-basket--front { z-index: 12; clip-path: polygon(0 32%, 10% 36%, 28% 40%, 50% 42%, 72% 40%, 90% 36%, 100% 32%, 100% 100%, 0 100%); }
+.lg-shadow { position: absolute; left: 24%; top: 80%; width: 52%; height: 8%; border-radius: 50%; background: #51402b22; filter: blur(15px); z-index: 0; }
+.lg-food { position: absolute; top: 42%; left: 50%; height: auto; opacity: 0; transform: translate(-50%, -50%); will-change: transform, opacity; user-select: none; }
+.lg-loading { position: absolute; top: 61%; left: 0; right: 0; text-align: center; color: #847b68; font-size: 14px; }
+.lg-finish { position: absolute; z-index: 15; top: 29%; right: 7%; width: 38%; animation: lg-reveal .7s ease both; }
+.lg-finish h2 { margin: 20px 0; font: 400 clamp(42px, 5.5vw, 85px)/.98 Georgia, 'Times New Roman', serif; letter-spacing: -.045em; }
+.lg-finish h2 em { color: #707d58; font-weight: 400; }
+.lg-finish p { max-width: 310px; font-size: 16px; line-height: 1.75; color: var(--lg-muted); }
+.lg-shop { display: inline-flex; justify-content: space-between; align-items: center; gap: 40px; background: #2d3b2e; color: #fffaf0; border: 1px solid #2d3b2e; padding: 17px 23px; margin-top: 17px; min-height: 52px; font-size: 14px !important; transition: background .2s, transform .2s; }
+.lg-shop:hover { background: #45563a; transform: translateY(-2px); }
+.lg-shop > span { font-size: 22px; line-height: 1; }
+.lg-finish small { display: block; max-width: 310px; margin-top: 18px; font-size: 13px; line-height: 1.6; color: var(--lg-muted); }
+.lg-finish--center { left: 10%; right: 10%; width: auto; text-align: center; }
+.lg-finish--center p, .lg-finish--center small { margin-left: auto; margin-right: auto; }
+.lg-footer { bottom: 30px; font-size: 12px; color: var(--lg-muted); }
+.lg-motion { background: none; border: 0; border-bottom: 1px solid #b1aa9b; padding: 8px 0; font-size: 12px !important; color: inherit; }
+.lg-counter { letter-spacing: .08em; color: #3a4831; white-space: nowrap; }
+.lg-counter span { color: #aaa393; }
+.lg-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #84775020; z-index: 25; }
+.lg-progress span { display: block; height: 100%; background: #697c51; transform: scaleX(0); transform-origin: left; }
+.lg-scroll button:focus-visible { outline: 3px solid #7a8e59; outline-offset: 6px; }
+.lg-scroll--static { height: calc(100svh - var(--lg-offset, 0px)); }
+.lg-scroll--static .lg-viewport { position: relative; top: 0; }
+@keyframes lg-reveal { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 719px) {
+  .lg-scroll { height: 300svh; }
+  .lg-scroll--static { height: calc(100svh - var(--lg-offset, 0px)); }
+  .lg-topline { top: 22px; left: 6%; right: 6%; gap: 12px; }
+  .lg-wordmark { font-size: 10px; letter-spacing: .09em; }
+  .lg-wordmark > span { padding: 0 5px; }
+  .lg-skip { font-size: 12px !important; }
+  .lg-skip span { margin-left: 8px; }
+  .lg-intro { top: 16%; left: 6%; right: 6%; }
+  .lg-intro h2 { font-size: clamp(29px, 7vw, 41px); line-height: 1.1; }
+  .lg-eyebrow { font-size: 10px; letter-spacing: .11em; }
+  .lg-stage { width: 113vw; top: 61%; }
+  .lg-watermark { top: 46%; font-size: 22vw; }
+  .lg-finish { top: 13%; left: 8%; right: 8%; width: auto; }
+  .lg-finish h2 { font-size: clamp(40px, 11vw, 58px); margin: 12px 0; }
+  .lg-finish p { max-width: 290px; font-size: 14px; line-height: 1.55; margin: 10px 0; }
+  .lg-shop { margin-top: 8px; padding: 13px 19px; min-height: 45px; }
+  .lg-footer { bottom: 21px; left: 6%; right: 6%; gap: 12px; font-size: 11px; }
+  .lg-footer > span:first-child { max-width: 145px; line-height: 1.5; }
+  .lg-motion { font-size: 11px !important; white-space: nowrap; }
+  .lg-finish--center { top: 25%; }
+  .lg-finish--center p { margin-left: auto; margin-right: auto; }
+}
+@media (max-height: 580px) and (min-width: 720px) {
+  .lg-intro { top: 15%; }
+  .lg-intro h2 { font-size: 30px; }
+  .lg-stage { width: min(64vw, 760px); top: 65%; }
+  .lg-finish { top: 23%; }
+  .lg-finish h2 { font-size: 48px; }
+  .lg-finish p { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-scroll *, .lg-scroll *::before, .lg-scroll *::after { animation: none !important; transition: none !important; }
+}
 
+/* Luxury ruby-red theme */
+
+.lg-scroll {
+  --lg-ink: #fff5ed;
+  --lg-muted: #efd5cf;
+  background: #420f1b;
+}
+
+.lg-viewport {
   background:
     radial-gradient(
-      ellipse at 50% 45%,
-      #fbfbe9 0%,
-      #eef1da 48%,
-      #dce6bf 100%
+      ellipse at 50% 62%,
+      rgba(245, 187, 130, 0.16) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 48% 38%,
+      #a4424d 0%,
+      #802936 40%,
+      #541522 76%,
+      #350b16 100%
     );
 }
 
-.grocery-scroll__top {
+/* Text */
+
+.lg-wordmark,
+.lg-intro h2,
+.lg-finish h2 {
+  color: #fff5ed;
+}
+
+.lg-eyebrow,
+.lg-intro h2 em,
+.lg-finish h2 em {
+  color: #f3d3a0;
+}
+
+.lg-finish p,
+.lg-finish small,
+.lg-footer,
+.lg-loading {
+  color: var(--lg-muted);
+}
+
+.lg-wordmark > span,
+.lg-counter span {
+  color: #dcb8b1;
+}
+
+.lg-watermark {
+  color: rgba(255, 222, 197, 0.075);
+}
+
+/* Controls */
+
+.lg-skip {
+  color: #fff5ed;
+  border-bottom-color: rgba(243, 211, 160, 0.55);
+}
+
+.lg-skip:hover,
+.lg-motion:hover {
+  color: #ffe5b9;
+}
+
+.lg-motion {
+  color: #efd5cf;
+  border-bottom-color: rgba(239, 213, 207, 0.4);
+}
+
+.lg-counter {
+  color: #f3d3a0;
+}
+
+/* Champagne-gold button */
+
+.lg-shop {
+  background: linear-gradient(135deg, #ffe9c5, #dfb77e);
+  color: #511423;
+  border: 1px solid #f0cf9c;
+
+  box-shadow:
+    0 8px 24px rgba(35, 0, 8, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.lg-shop:hover {
+  background: linear-gradient(135deg, #fff2dc, #efcc98);
+  color: #511423;
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(35, 0, 8, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Shadow and progress */
+
+.lg-shadow {
+  background: rgba(30, 0, 8, 0.38);
+  filter: blur(18px);
+}
+
+.lg-progress {
+  background: rgba(255, 235, 215, 0.12);
+}
+
+.lg-progress span {
+  background: linear-gradient(90deg, #c79861, #ffe9c5);
+}
+
+.lg-scroll button:focus-visible {
+  outline-color: #ffe9c5;
+}
+
+/* Tabs sit directly over the animation's existing background. */
+.lg-tabs {
   position: absolute;
-  top: 28px;
-  left: 6%;
-  right: 6%;
-  z-index: 3;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  height: 48px;
 }
 
-.grocery-scroll__top > span {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-}
-
-.grocery-scroll__top button {
-  border: 1px solid #24453233;
-  border-radius: 30px;
-  padding: 10px 17px;
+.lg-tabs .tabsBar {
+  width: 100%;
+  height: 48px;
 
   background: transparent;
-  color: var(--grocery-green);
-
-  font: inherit;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.grocery-scroll__background-word {
-  position: absolute;
-  top: 17%;
-  left: 50%;
-  transform: translateX(-50%);
-
-  font-size: clamp(120px, 25vw, 390px);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.07em;
-
-  color: #b7cc8833;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-}
-
-.grocery-scroll__canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.grocery-scroll__canvas canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.grocery-scroll__canvas[hidden] {
-  display: none;
-}
-
-.grocery-scroll__intro {
-  position: absolute;
-  top: 12%;
-  left: 50%;
-  z-index: 2;
-
-  width: min(650px, 85%);
-  transform: translateX(-50%);
-  text-align: center;
-  pointer-events: none;
-
-  animation: grocery-intro-in 450ms ease both;
-}
-
-.grocery-scroll__intro p {
-  margin: 0 0 12px;
-
-  color: #6a7b54;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-}
-
-.grocery-scroll__intro h2 {
-  margin: 0;
-  font-size: clamp(26px, 3.3vw, 48px);
-  line-height: 1.12;
-  letter-spacing: -0.045em;
-}
-
-.grocery-scroll__finish {
-  position: absolute;
-  top: 50%;
-  right: 7%;
-  z-index: 3;
-
-  width: 38%;
-  transform: translateY(-50%);
-
-  animation: grocery-finish-in 650ms ease both;
-}
-
-.grocery-scroll__finish > span {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #657951;
-}
-
-.grocery-scroll__finish h2 {
-  margin: 20px 0;
-
-  font-size: clamp(42px, 5.3vw, 80px);
-  line-height: 1;
-  letter-spacing: -0.055em;
-}
-
-.grocery-scroll__finish h2 em {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-weight: 400;
-  color: #618143;
-}
-
-.grocery-scroll__finish > p {
-  max-width: 330px;
-  margin: 0;
-
-  color: #667458;
-  font-size: 16px;
-  line-height: 1.7;
-}
-
-.grocery-scroll__finish > button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-
-  min-height: 50px;
-  margin-top: 26px;
-  padding: 14px 24px;
-
   border: none;
-  border-radius: 30px;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
 
-  background: var(--grocery-green);
-  color: #ffffff;
+.lg-tabs .tabsBar button,
+.lg-tabs .tabsBar button:hover,
+.lg-tabs .tabsBar button.active {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
 
-  font: inherit;
-  font-size: 15px;
+.lg-tabs .tabsBar button {
+  color: #efd5cf;
+}
+
+.lg-tabs .tabsBar button:hover {
+  color: #ffe5b9;
+}
+
+.lg-tabs .tabsBar button.active {
+  color: #f3d3a0;
   font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    transform 200ms ease,
-    background 200ms ease;
 }
 
-.grocery-scroll__finish > button:hover {
-  transform: translateY(-3px);
-  background: #365e40;
+/* Space below the integrated tabs. */
+.lg-topline {
+  top: 76px;
 }
 
-.grocery-scroll__finish > button span {
-  font-size: 23px;
-  line-height: 1;
+.lg-intro {
+  top: max(132px, 19%);
 }
 
-.grocery-scroll__finish small {
-  display: block;
-  max-width: 330px;
-  margin-top: 18px;
-
-  color: #667458;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.grocery-scroll__finish--center {
-  right: auto;
-  left: 50%;
-  width: min(550px, 85%);
-  text-align: center;
-  transform: translate(-50%, -50%);
-  animation: none;
-}
-
-.grocery-scroll__finish--center > p,
-.grocery-scroll__finish--center small {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.grocery-scroll__bottom {
-  position: absolute;
-  bottom: 28px;
-  left: 6%;
-  right: 6%;
-  z-index: 3;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-
-  color: #667458;
-  font-size: 13px;
-}
-
-.grocery-scroll__steps {
-  display: flex;
-  gap: 7px;
-}
-
-.grocery-scroll__steps span {
-  display: block;
-  width: 20px;
-  height: 4px;
-  border-radius: 10px;
-  background: #24453226;
-
-  transition:
-    width 250ms ease,
-    background 250ms ease;
-}
-
-.grocery-scroll__steps span.is-active {
-  width: 42px;
-  background: var(--grocery-green);
-}
-
-.grocery-scroll button:focus-visible {
-  outline: 3px solid #82994f;
-  outline-offset: 5px;
-}
-
-/* No long scroll track when animation cannot or should not run. */
-.grocery-scroll--static {
-  height: calc(100vh - var(--grocery-sticky-offset, 0px));
-  height: calc(100svh - var(--grocery-sticky-offset, 0px));
-}
-
-.grocery-scroll--static .grocery-scroll__sticky {
-  position: relative;
-  top: 0;
-}
-
-@keyframes grocery-intro-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 12px);
+@media (max-width: 719px) {
+  .lg-topline {
+    top: 70px;
   }
 
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-@keyframes grocery-finish-in {
-  from {
-    opacity: 0;
-    transform: translate(25px, -50%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(0, -50%);
-  }
-}
-
-@media (max-width: 699px) {
-  .grocery-scroll {
-    height: 290svh;
-  }
-
-  .grocery-scroll--static {
-    height: calc(100svh - var(--grocery-sticky-offset, 0px));
-  }
-
-  .grocery-scroll__top {
-    top: 20px;
-    left: 6%;
-    right: 6%;
-  }
-
-  .grocery-scroll__top > span {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-  }
-
-  .grocery-scroll__top button {
-    padding: 9px 12px;
-    font-size: 12px;
-  }
-
-  .grocery-scroll__intro {
-    top: 15%;
-    width: 86%;
-  }
-
-  .grocery-scroll__intro h2 {
-    font-size: clamp(26px, 7vw, 36px);
-  }
-
-  .grocery-scroll__background-word {
-    top: 38%;
-    font-size: 29vw;
-  }
-
-  .grocery-scroll__canvas {
-    top: 16%;
-  }
-
-  .grocery-scroll__finish {
-    top: 13%;
-    left: 7%;
-    right: 7%;
-
-    width: auto;
-    transform: none;
-
-    animation: grocery-mobile-in 500ms ease both;
-  }
-
-  .grocery-scroll__finish > span {
-    font-size: 10px;
-  }
-
-  .grocery-scroll__finish h2 {
-    margin: 12px 0;
-    font-size: clamp(38px, 10vw, 52px);
-  }
-
-  .grocery-scroll__finish > p {
-    max-width: 280px;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .grocery-scroll__finish > button {
-    min-height: 44px;
-    margin-top: 16px;
-    padding: 11px 20px;
-    font-size: 14px;
-  }
-
-  .grocery-scroll__finish--center {
-    top: 50%;
-    left: 7%;
-    right: 7%;
-    transform: translateY(-50%);
-    animation: none;
-  }
-
-  .grocery-scroll__bottom {
-    bottom: 20px;
-    font-size: 12px;
-  }
-
-  .grocery-scroll__bottom > span {
-    max-width: 190px;
-  }
-
-  .grocery-scroll__steps span {
-    width: 12px;
-  }
-
-  .grocery-scroll__steps span.is-active {
-    width: 24px;
-  }
-}
-
-@keyframes grocery-mobile-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .grocery-scroll *,
-  .grocery-scroll *::before,
-  .grocery-scroll *::after {
-    animation: none !important;
-    transition: none !important;
+  .lg-intro {
+    top: max(120px, 20%);
   }
 }
