@@ -16,6 +16,7 @@ function App() {
 
       <Banner />
 
+
       <section id="products">
         <Products />
       </section>

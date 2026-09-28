@@ -164,7 +164,7 @@ export default function GroceryScroll({ targetId = 'products', stickyOffset = 0,
           <span className="lg-wordmark">THE FRESH EDIT<span> / </span>01</span>
           <button className="lg-skip" type="button" onClick={shop}>Explore groceries <span aria-hidden="true">↗</span></button>
         </div>
-        <div className="lg-watermark" aria-hidden="true">Naturally good.</div>
+        <div className="lg-watermark" aria-hidden="true">TESCO SUPERMARKET</div>
         {!complete && <div className="lg-intro" key={phase}>
           <span className="lg-eyebrow">EVERYDAY GOODNESS, ELEVATED</span>
           <h2>{HEADINGS[Math.min(phase, 2)][0]}<br /><em>{HEADINGS[Math.min(phase, 2)][1]}</em></h2>

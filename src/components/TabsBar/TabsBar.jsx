@@ -1,15 +1,18 @@
-import styles from "./TabsBar.module.css";
+import styles from "./AppBar.module.css";
 
-function TabsBar() {
+function AppBar() {
   return (
-    <nav className={styles.tabsBar}>
-      <button className={styles.active}>Dashboard</button>
-      <button>Products</button>
-      <button>Sales</button>
-      <button>Purchases</button>
-      <button>Reports</button>
-    </nav>
+    <header className={styles.appBar}>
+      <div className={styles.marquee}>
+        <div className={styles.marqueeTrack}>
+          <h2>Tesco Super Market</h2>
+          <h2 aria-hidden="true">Tesco Super Market</h2>
+          <h2 aria-hidden="true">Tesco Super Market</h2>
+          <h2 aria-hidden="true">Tesco Super Market</h2>
+        </div>
+      </div>
+    </header>
   );
 }
 
-export default TabsBar;
+export default AppBar;

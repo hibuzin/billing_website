@@ -31,7 +31,7 @@
 .lg-scroll button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .lg-skip { border: 0; border-bottom: 1px solid #a6a08f; background: none; color: inherit; padding: 8px 0; font-size: 14px !important; }
 .lg-skip span { margin-left: 18px; }
-.lg-watermark { position: absolute; left: 50%; top: 39%; transform: translateX(-50%); white-space: nowrap; font: italic clamp(75px, 15vw, 240px)/1 Georgia, serif; letter-spacing: -.045em; color: #b9ad9420; pointer-events: none; }
+.lg-watermark { position: absolute; left: 50%; top: 39%; transform: translateX(-50%); white-space: nowrap; font: italic clamp(55px, 15vw, 120px)/1 Georgia, serif; letter-spacing: -.045em; color: #b9ad9420; pointer-events: none; }
 .lg-intro { position: absolute; z-index: 12; top: 13%; left: 8%; right: 8%; text-align: center; pointer-events: none; animation: lg-reveal .6s ease both; }
 .lg-eyebrow { font: 600 11px/1.5 Arial, sans-serif; letter-spacing: .18em; color: #807964; }
 .lg-intro h2 { margin: 14px 0 0; font: 400 clamp(29px, 3.8vw, 56px)/1.05 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; }
@@ -279,4 +279,41 @@
   .lg-intro {
     top: max(120px, 20%);
   }
+}
+
+/* Completely remove glass/frosted effect from tab bar */
+.lg-tabs,
+.lg-tabs .tabsBar {
+  background: transparent !important;
+  background-color: transparent !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  box-shadow: none !important;
+  border: none !important;
+  filter: none !important;
+}
+
+.lg-tabs::before,
+.lg-tabs::after,
+.lg-tabs .tabsBar::before,
+.lg-tabs .tabsBar::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep individual tabs clean too */
+.lg-tabs .tabsBar button,
+.lg-tabs .tabsBar button:hover,
+.lg-tabs .tabsBar button.active {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  filter: none !important;
 }
